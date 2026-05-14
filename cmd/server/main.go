@@ -1,10 +1,12 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 
 	"github.com/aaronmatei/expense_tracker_api_go/internal/config"
+	"github.com/aaronmatei/expense_tracker_api_go/internal/database"
 )
 
 func main() {
@@ -13,10 +15,15 @@ func main() {
 		log.Fatalf("Failed to load config: %v", err)
 	}
 
-	fmt.Printf("App Environment: %s\n", cfg.AppEnv)
-	fmt.Printf("Port: %s\n", cfg.Port)
-	fmt.Printf("Log Level: %s\n", cfg.LogLevel)
-	//fmt.Printf("Database URL: %s\n", cfg.DatabaseURL)
-	fmt.Printf("Cors Origins: %v\n", cfg.CORSOrigins)
-	fmt.Printf("JWT Expiry: %v\n", cfg.JWTExpiry())
+	//Database connection
+	ctx := context.Background()
+	pool, err := database.Connect(ctx, cfg.DatabaseURL)
+	if err != nil {
+		log.Fatalf("Failed to connect to database: %v", err)
+	}
+	defer pool.Close()
+
+	fmt.Println("Hello, expense tracker!")
+	fmt.Printf("Environment: %s\n", cfg.AppEnv)
+	fmt.Printf("Connected to Postgres pool (max %d conns)\n", pool.Config().MaxConns)
 }
