@@ -31,10 +31,10 @@ type Config struct {
 func New(pool *pgxpool.Pool, cfg Config) http.Handler {
 	r := chi.NewRouter()
 
-	// Cross-cutting middleware applied to every request.
-	// Order matters: Recoverer must be outermost so it catches panics from
-	// anything below it; Logger sits after RequestID/RealIP so log lines
-	// carry the correlation ID and true client IP.
+	// Global middleware, applied to every request.
+	// Order matters: panic recovery runs first so it catches panics from
+	// later middleware, request logging captures everything, CORS lets the
+	// Flutter app and any web client talk to us.
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.RequestID)
 	r.Use(middleware.RealIP)
