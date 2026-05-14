@@ -80,7 +80,7 @@ func main() {
 		slog.Error("graceful shutdown failed", "err", err)
 		os.Exit(1)
 	}
-	slog.Info("server stopped cleanly")
+	slog.Info("server stopped cleanly...")
 }
 
 // newLogger returns a slog.Logger configured for the environment.

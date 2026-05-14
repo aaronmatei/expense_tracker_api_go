@@ -1,7 +1,10 @@
-.PHONY: run migrate-up migrate-down migrate-new
+.PHONY: run dev migrate-up migrate-down migrate-new
 
 run:
 	go run ./cmd/server
+
+dev:
+	air
 
 migrate-up:
 	@set -a; source .env; set +a; \
