@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls \"C:/Users/usser/.claude/projects/--wsl-localhost-ubuntu-home-user-projects-expense-mobile-expense-tracker-api-go/memory/\" 2>/dev/null || echo \"no memory dir\")"
+    ]
+  }
+}

@@ -1,0 +1,45 @@
+# === Binaries ===
+# Compiled Go binaries — usually live at the project root after `go build`.
+# We don't commit binaries; anyone who clones the repo can rebuild them.
+/server
+/bin/
+/tmp/
+*.exe
+*.test
+*.out
+
+# === Environment & secrets ===
+# .env holds real secrets (database URL, JWT secret). NEVER commit it.
+# .env.example is a TEMPLATE with placeholder values — that one IS committed
+# so other developers know what variables they need to set up locally.
+.env
+.env.local
+.env.*.local
+
+# === Editor & OS noise ===
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# === Go-specific ===
+# Coverage reports from `go test -cover`
+coverage.out
+coverage.html
+
+# Vendor directory — only matters if you `go mod vendor`. We don't use vendoring,
+# but blocking it just in case prevents accidental megabyte-commits of dependencies.
+/vendor/
+
+# Air (the hot-reload tool we'll set up later) — its build cache
+.air/
+tmp/
+build-errors.log
+
+# === Database & local data ===
+# Just in case we ever generate a local SQLite or dump file for testing
+*.db
+*.db-journal
+*.dump
