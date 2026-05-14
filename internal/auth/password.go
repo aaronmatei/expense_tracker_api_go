@@ -18,7 +18,7 @@ func HashPassword(password string) (string, error) {
 }
 
 // VerifyPasswordHash checks if the given password matches the hash.
-func VerifyPassword(password, hash string) error {
+func VerifyPassword(hash, password string) error {
 	if err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password)); err != nil {
 		return fmt.Errorf("password does not match hash: %w", err)
 	}
