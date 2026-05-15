@@ -88,6 +88,7 @@ func (h *Handler) register(w http.ResponseWriter, r *http.Request) {
 			writeError(w, http.StatusConflict, "email already registered")
 		default:
 			writeError(w, http.StatusBadRequest, err.Error())
+
 		}
 		return
 	}

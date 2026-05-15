@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -92,12 +93,12 @@ func (r *Repository) GetByID(ctx context.Context, id int64) (*User, error) {
 }
 
 // isUniqueViolation checks if the error is a unique constraint violation (e.g., duplicate email)
+// isUniqueViolation checks whether a pgx error is a Postgres unique-constraint
+// violation (SQLSTATE 23505). Used to translate raw DB errors into our sentinel.
 func isUniqueViolation(err error) bool {
-	var pgErr interface {
-		SQLSlate() string
-	}
+	var pgErr *pgconn.PgError
 	if errors.As(err, &pgErr) {
-		return pgErr.SQLSlate() == "23505"
+		return pgErr.Code == "23505"
 	}
 	return false
 }
